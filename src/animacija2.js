@@ -86,13 +86,27 @@ function startGame() {
     drawBat()
     drawBall()
     drawBricks()
+    d('scores').style.fontSize='2rem'
+    d('lives').style.fontSize='2rem'
+    d('scores').textContent=`Score: ${score}`
+    d('lives').textContent=`Lives: ${lives}`
     document.body.addEventListener('keydown',batMove)
 }
 
 function livesChange(num) { // num is -1 or +x
     lives+=num
+    d('lives').textContent=`Lives: ${lives}`
+    if (lives===0) gameOver()
 }
+function gameOver(){
+    d('frame').style.cssText='font-size:3rem;margin:100px'
+    d('frame').innerHTML="GAME OVER"
+    d('ball').style.display='none'
+    d('frame').removeChild('ball')
+    // Linija 107 iz nekog razloga ne radi
+    d('startGame').disabled=false
 
+}
 
 // document.createElement('div')
 
@@ -165,10 +179,13 @@ function drawBall() {
             if (direction2 == 'right') x += speedHorizontal;
             else x -= speedHorizontal;
     
-            if (y > frame.height) direction = 'up';
+            if (y > frame.height){
+                direction = 'up'
+                livesChange(-1)
+        }
             if (y < 0) direction = 'down';
     
-            if (x > frame.width) direction2 = 'levo';
+            if (x > frame.width) direction2 = 'left';
             if (x < 0) direction2 = 'right';
     
             ball.style.top = y + 'px';
