@@ -1,0 +1,23 @@
+--- U funk za cigle se doda status property za svaki brick obj: u sustini gde smo dobili bricks[i][j] dodamo i property 
+status : 1
+
+pa je bricks[i][j] = {x:0, y:0, status :1}
+
+Sad proveravamo status----
+
+Tamo gde smo radili drawBricks() funk dodamo i uslov pre iscrtavanja if (bricks[i][j].status===1) {iscrtaj cigle}
+
+I onda ostane provera statusa u funkciji za collision detection---
+
+let b = bricks[i][j] // da ne bi pisali svaki put ovo, lakse b
+
+function collDetect () {
+	for loop za prolazenje kroz svaki column
+		for loop za row
+		if (b.status == 1) {
+		   if (provera collision / uslovi)	// da ne pisem sad to
+			pravac loptice = - pravac loptice
+			b.status = 0
+}
+		
+}
