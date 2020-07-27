@@ -1,35 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
 
 <script>
-let rectangle = {width:100,height:100, x:20, y:20}
-let rectangle2 = {width:20,height:20, x:200, y:200}
-let circle = {radius: 10, x:200,y:200}
+  let rectangle1 = { width: 100, height: 50, x: 50, y: 30 }
 
-// 20, 20                                   120, 20
-// 20,120                                   120,120
+  let rectangle2 = { width: 100, height: 50, x: 0, y: 0 }
+  let rectangle3 = { width: 100, height: 50, x: 120, y: 0 }
+  let rectangle4 = { width: 100, height: 50, x: 0, y: 60 }
+  let rectangle5 = { width: 100, height: 50, x: 120, y: 60 }
+  let circle = { radius: 10, x: 200, y: 200 }
 
-// 200, 200                                 220, 200
-// 200, 220                                 220, 220
+  // 20, 20                                   120, 20
+  // 20,120                                   120,120
+
+  // 200, 200                                 220, 200
+  // 200, 220                                 220, 220
+
+  /**
+   *  Collision detect
+   *
+   *
+   *             0    30    60         120  150   180
+   *
+   *        0    ┌───────────┐          ┌──────────┐
+   *             │     2     │          │     3    │
+   *       30    │    ┌──────│──────────│────┐     │
+   *             │    │      │          │    │     │
+   *       60    └────│──────┘          └────│─────┘
+   *                  │           1          │
+   *       90    ┌────│──────┐          ┌────│─────┐
+   *             │    │      │          │    │     │
+   *      120    │    └──────│──────────│────┘     │
+   *             │     4     │          │    5     │
+   *      150    └───────────┘          └──────────┘
+   *
+   */
+  function collisionDetect (first, second) {
+    const firstRight = first.x + first.width
+    const secondRight = second.x + second.width
+    const firstBottom = first.y + first.height
+    const secondBottom = second.y + second.height
+
+    const xInside = first.x > second.x && first.x < secondRight
+    const xRightInside = firstRight > second.x && firstRight < secondRight
+
+    const yInside = first.y > second.y && first.y < secondBottom
+    const yBottomInside = firstBottom > second.y && firstBottom < secondBottom
+
+    if (xInside && yInside) return 2
+    if (xRightInside && yInside) return 3
+    if (xInside && yBottomInside) return 4
+    if (xRightInside && yBottomInside) return 5
+
+    return false
+  }
 
 
-if(
 
-  (
-  rectangle.x > rectangle2.x && rectangle2.x<(rectangle.x+rectangle.width) &&
-  rectangle.y > rectangle2.y && rectangle2.y<(rectangle.y+rectangle.height)
-  )
-
-
-){
-
-}
+  console.log(collisionDetect(rectangle1, rectangle2))
+  console.log(collisionDetect(rectangle1, rectangle3))
+  console.log(collisionDetect(rectangle1, rectangle4))
+  console.log(collisionDetect(rectangle1, rectangle5))
+  console.log(collisionDetect(rectangle2, rectangle3))
+  console.log(collisionDetect(rectangle3, rectangle4))
+  console.log(collisionDetect(rectangle4, rectangle5))
+  console.log(collisionDetect(rectangle2, rectangle4))
+  console.log(collisionDetect(rectangle2, rectangle5))
+  console.log(collisionDetect(rectangle3, rectangle5))
 
 </script>
 </body>
