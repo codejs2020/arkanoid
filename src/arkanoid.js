@@ -1,15 +1,19 @@
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext('2d')
-let ballPositionX = canvas.width / 2 // Ball's X position
-let ballPositionY = canvas.height - 50 // Ball's Y position on canvas
 
+let scores = []
 let score = 0
 let lives = 3
 
-// ball
+// starting ball positions
+
+let ballPositionX = canvas.width / 2
+let ballPositionY = canvas.height - 50
+
+
 let ball = {
-  ballMoveX: 3,
-  ballMoveY: -3,
+  ballMoveX: 4,
+  ballMoveY: -4,
   ballRadius: 10,
   ballAngle: 0
 }
@@ -32,6 +36,9 @@ let brickColumns = 8
 let brickPadding = 12
 let brickOffsetTop = 40
 let brickOffsetLeft = 25
+
+// Levels
+
 
 let bricks = []
 for (let i = 0; i < brickColumns; i++) {
@@ -105,7 +112,7 @@ function ballCanvasCollision() {
     lives--
     if (lives === 0) {
       gameOver()
-    } else { // starting canvas positions of ball and bat
+    } else { // starting canvas positions of ball and bat; ball should stop and when u hit space it should start movin again
       ballPositionX = canvas.width / 2
       ballPositionY = canvas.height - 50
 
